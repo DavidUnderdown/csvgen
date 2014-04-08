@@ -50,7 +50,7 @@ for fileCounter in range(1,11) :
 		
 		filelist.append([fileURI,UuidString,fileHash]);
 
-filelistCSV=open('y:\dunderdown\TEST1.csv', 'w', newline='')
+filelistCSV=open(os.path.join(filenameBase,lettercode+str(series)+'.csv'), 'w', newline='');
 csv.writer(filelistCSV,dialect='excel').writerows(filelist);
 	
 	
