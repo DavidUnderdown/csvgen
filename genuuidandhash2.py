@@ -18,7 +18,7 @@ endXML='''<Copyright>&#169; Crown copyright: The National Archives of the UK</Co
 </DigitalFile>''';
 fileExtension='.xml';
 filenameBase=os.getcwd();
-filelist=[['filepath','checksum']]
+filelist=[['filepath','uuid','checksum']]
 
 for fileCounter in range(1,11) :
 	for currentpiece in range (initialpiece,initialpiece+totalpieces) : 
@@ -48,7 +48,7 @@ for fileCounter in range(1,11) :
 		fileHash=hashlib.sha256(fo.read()).hexdigest();
 		fo.close();
 		
-		filelist.append([fileURI,UuidString]);
+		filelist.append([fileURI,UuidString,fileHash]);
 
 filelistCSV=open('y:\dunderdown\TEST1.csv', 'w', newline='')
 csv.writer(filelistCSV,dialect='excel').writerows(filelist);
