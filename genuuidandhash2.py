@@ -6,13 +6,13 @@ beginXML='''<?xml version="1.0" encoding="utf-8"?>
 openUUIDtag='<UUID>';
 closeUUIDtag='''</UUID>
 ''';
-openURLtag='<URL>';
+openURLtag='<URI>';
 baseURL='http://datagov.nationalarchives.gov.uk/66/';
 lettercode='TEST'
 series=1
 initialpiece=1
 totalpieces=2
-closeURLtag='''</URL>
+closeURLtag='''</URI>
 ''';
 endXML='''<Copyright>&#169; Crown copyright: The National Archives of the UK</Copyright>
 </DigitalFile>''';
