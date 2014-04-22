@@ -20,7 +20,7 @@ endXML='''<Copyright>&#169; Crown copyright: The National Archives of the UK</Co
 </DigitalFile>''';
 fileExtension='.xml';
 filenameBase=os.getcwd();
-filelist=[['batch_code','department','division','sub_series','sub_sub_series','piece','item','file_uuid','file_path','file_checksum','resource_uri','scan_operator','scan_id','scan_location']];
+filelist=[['batch_code','department','division','sub_series','sub_sub_series','piece','item','file_uuid','file_path','file_checksum','resource_uri','scan_operator','scan_id','scan_location','image_resolution','image_width','image_height','image_tonal_resolution','image_format','image_compression','image_colour_space','image_split','image_split_other_uuid','image_crop','image_deskew','comments']];
 batch_code='TESTBATCH000';
 division='';
 sub_series='';
@@ -28,6 +28,16 @@ sub_sub_series='';
 scan_operator='scanop';
 scan_id='scanner';
 scan_location='The National Archives, TW9 4DU';
+image_resolution='300';
+image_tonal_resolution='24-bit colour';
+image_format='x-fmt/392';
+image_compression='6';
+image_colour_space='sRGB';
+image_split='no';
+image_split_other_uuid='';
+image_crop='auto';
+image_deskew='no'
+comments='Files would normally be JPEG2000s, but to keep to a manageable size, for these examples only the XML which would normally be embedded is presented';
 
 def checksum(fullfilepath) :
 	fo=open(fullfilepath, "rb");
@@ -36,7 +46,7 @@ def checksum(fullfilepath) :
 	return fileHash;
 	
 def addToFilelist(currentpiece,currentitem,UuidString,fileURI,fullURL,filepath,filename) :
-	filelist.append([batch_code,department,division,sub_series,sub_sub_series,currentpiece,currentitem,UuidString,fileURI,checksum(os.path.join(filepath,filename)),fullURL,scan_operator+str(random.randint(1,5)).zfill(2),scan_id+str(random.randint(1,3)).zfill(2),scan_location]);
+	filelist.append([batch_code,department,division,sub_series,sub_sub_series,currentpiece,currentitem,UuidString,fileURI,checksum(os.path.join(filepath,filename)),fullURL,scan_operator+str(random.randint(1,5)).zfill(2),scan_id+str(random.randint(1,3)).zfill(2),scan_location,image_resolution,str(random.randint(2400,2600)),str(random.randint(3450,3650)),image_tonal_resolution,image_format,image_compression,image_colour_space,image_split,image_split_other_uuid,image_crop,image_deskew,comments]);
 
 def buildURL(piecestring,itemstring,UuidString) :
 	if itemstring : #ie if itemstring is not the empty string
