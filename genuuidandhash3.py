@@ -20,7 +20,7 @@ endXML='''<Copyright>&#169; Crown copyright: The National Archives of the UK</Co
 </DigitalFile>''';
 fileExtension='.xml';
 filenameBase=os.getcwd();
-filelist=[['batch_code','department','division','sub_series','sub_sub_series','piece','item','file_uuid','file_path','file_checksum','resource_uri','scan_operator','scan_id','scan_location','image_resolution','image_width','image_height','image_tonal_resolution','image_format','image_compression','image_colour_space','image_split','image_split_other_uuid','image_crop','image_deskew','comments']];
+filelist=[['batch_code','department','division','series','sub_series','sub_sub_series','piece','item','file_uuid','file_path','file_checksum','resource_uri','scan_operator','scan_id','scan_location','image_resolution','image_width','image_height','image_tonal_resolution','image_format','image_compression','image_colour_space','image_split','image_split_other_uuid','image_crop','image_deskew','comments']];
 batch_code='TESTBATCH000';
 division='';
 sub_series='';
@@ -46,7 +46,7 @@ def checksum(fullfilepath) :
 	return fileHash;
 	
 def addToFilelist(currentpiece,currentitem,UuidString,fileURI,fullURL,filepath,filename) :
-	filelist.append([batch_code,department,division,sub_series,sub_sub_series,currentpiece,currentitem,UuidString,fileURI,checksum(os.path.join(filepath,filename)),fullURL,scan_operator+str(random.randint(1,5)).zfill(2),scan_id+str(random.randint(1,3)).zfill(2),scan_location,image_resolution,str(random.randint(2400,2600)),str(random.randint(3450,3650)),image_tonal_resolution,image_format,image_compression,image_colour_space,image_split,image_split_other_uuid,image_crop,image_deskew,comments]);
+	filelist.append([batch_code,department,division,str(series),sub_series,sub_sub_series,currentpiece,currentitem,UuidString,fileURI,checksum(os.path.join(filepath,filename)),fullURL,scan_operator+str(random.randint(1,5)).zfill(2),scan_id+str(random.randint(1,3)).zfill(2),scan_location,image_resolution,str(random.randint(2400,2600)),str(random.randint(3450,3650)),image_tonal_resolution,image_format,image_compression,image_colour_space,image_split,image_split_other_uuid,image_crop,image_deskew,comments]);
 
 def buildURL(piecestring,itemstring,UuidString) :
 	if itemstring : #ie if itemstring is not the empty string
@@ -116,8 +116,13 @@ for fileCounter in range(1,11) :
 
 			buildDirectoriesAndWriteFile(fileMetadata[0],fileMetadata[1],fullXML)
 			addToFilelist(currentpiece,currentitem,UuidString,fileURI,fullURL,fileMetadata[1],fileMetadata[0]);
-		
-filelistCSV=open(os.path.join(filenameBase,department+str(series)+'.csv'), 'w', newline='');
+
+CSVfilepath=os.path.join(filenameBase,'digitised_surrogate_tech_acq_metadata_v1_'+batch_code+'.csv');			
+filelistCSV=open(CSVfilepath, 'w', newline='');
 csv.writer(filelistCSV,dialect='excel').writerows(filelist);
 filelistCSV.close()
-print(filelist);
+
+CSVchecksum=checksum(CSVfilepath);
+sha256file=open(CSVfilepath+'.sha256', 'w', newline='');
+sha256file.write(CSVchecksum+'\t'+'digitised_surrogate_tech_acq_metadata_v1_'+batch_code+'.csv');
+sha256file.close;
